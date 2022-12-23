@@ -8,7 +8,8 @@
  * @format
  */
 
-import React, {type PropsWithChildren} from 'react';
+// eslint-disable-next-line prettier/prettier
+import React, { type PropsWithChildren } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -26,12 +27,13 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { TextComponent } from '~src/components/Message/Text';
 
 const Section: React.FC<
   PropsWithChildren<{
     title: string;
   }>
-> = ({children, title}) => {
+> = ({ children, title }) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -88,9 +90,7 @@ const App = () => {
           <Section title="Debug">
             <DebugInstructions />
           </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
+          <TextComponent />
           <LearnMoreLinks />
         </View>
       </ScrollView>
