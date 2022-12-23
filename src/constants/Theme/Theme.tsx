@@ -5,12 +5,12 @@ export const darkTheme: ThemeState = {
   dark: true,
   dividerColor: '',
   colors: {
-    background: '#550e05',
-    border: '#9b9b11',
-    card: '',
-    notification: '',
-    primary: '',
-    text: '',
+    background: '#7f131b',
+    border: '#ffffff',
+    card: '#1a7f8b',
+    notification: '#F6ec36',
+    primary: '#FFFF',
+    text: '#ffffff',
   },
 };
 export const lightTheme: ThemeState = {
@@ -19,10 +19,10 @@ export const lightTheme: ThemeState = {
   dividerColor: '',
   colors: {
     background: '#c61e08',
-    border: '#ffff3d',
-    card: '',
-    notification: '',
-    primary: '',
-    text: '',
+    border: '#F6ec36',
+    card: '#9fd2d3',
+    notification: '#000000',
+    primary: '#000000',
+    text: '#000000',
   },
 };

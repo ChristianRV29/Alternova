@@ -1,16 +1,56 @@
 import React, { useContext } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import styled from '@emotion/native';
 
 import { ThemeContext } from '~src/context/Theme';
+import { Text, TouchableOpacity } from 'react-native';
+import { Toggler } from '~src/components/Toggler/Toggler';
 
 export const Home = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const { top } = useSafeAreaInsets();
+
   return (
-    <View>
-      <Text>Welcome to home!</Text>
-      <TouchableOpacity activeOpacity={0.8} onPress={() => toggleTheme()}>
-        <Text>Toggle current theme!: {theme.currentTheme}</Text>
-      </TouchableOpacity>
-    </View>
+    <Wrapper theme={theme} topSpacing={top}>
+      <HeroContainer theme={theme}>
+        <Toggler />
+        <LegoLogo source={require('~src/assets/images/lego.png')} />
+        <TouchableOpacity activeOpacity={0.8}>
+          <Text>Cart</Text>
+        </TouchableOpacity>
+      </HeroContainer>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.View<{ topSpacing: number }>`
+  background-color: ${({ theme }) => theme.colors.background};
+  display: flex;
+  flex-basis: 0;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex: 1;
+  justify-content: flex-start;
+  padding: 10px;
+  top: ${({ topSpacing }) => `${topSpacing}px`};
+`;
+
+const HeroContainer = styled.View`
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.card};
+  border-radius: 25px 0 25px 0;
+  border: ${({ theme }) => `3px solid ${theme.colors.border}`};
+  display: flex;
+  flex-direction: row;
+  height: 75px;
+  justify-content: space-between;
+  padding: 0 20px;
+  width: 100%;
+`;
+
+const LegoLogo = styled.Image`
+  height: 50px;
+  width: 100px;
+`;
