@@ -1,15 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import styled from '@emotion/native';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import { ThemeContext } from '~src/context/Theme';
-import { Text } from 'react-native';
 
 export const Toggler = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
+  const [iconName, setIconName] = useState<string>(
+    theme.dark ? 'sunny-outline' : 'moon-outline',
+  );
+
+  useEffect(() => {
+    setIconName(theme.dark ? 'sunny-outline' : 'moon-outline');
+  }, [theme]);
+
   return (
-    <Wrapper theme={theme} activeOpacity={0.8} onPress={() => toggleTheme()}>
-      <Text>Theme</Text>
+    <Wrapper onPress={() => toggleTheme()}>
+      <Icon name={iconName} size={30} color={theme.colors.text} />
     </Wrapper>
   );
 };
