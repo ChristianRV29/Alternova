@@ -1,14 +1,16 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import React, { useContext } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ThemeContext } from '~src/context/Theme';
 
 export const Home = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
   return (
-    <SafeAreaView>
-      <View>
-        <Text>Welcome to home!</Text>
-      </View>
-    </SafeAreaView>
+    <View>
+      <Text>Welcome to home!</Text>
+      <TouchableOpacity activeOpacity={0.8} onPress={() => toggleTheme()}>
+        <Text>Toggle current theme!: {theme.currentTheme}</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
