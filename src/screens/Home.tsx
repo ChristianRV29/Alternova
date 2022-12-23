@@ -4,11 +4,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from '@emotion/native';
 
 import { ThemeContext } from '~src/context/Theme';
-import { Text, TouchableOpacity } from 'react-native';
-import { Toggler } from '~src/components/Toggler/Toggler';
+import { Cart, Toggler } from '~src/components';
 
 export const Home = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const { top } = useSafeAreaInsets();
 
   return (
@@ -16,9 +15,7 @@ export const Home = () => {
       <HeroContainer theme={theme}>
         <Toggler />
         <LegoLogo source={require('~src/assets/images/lego.png')} />
-        <TouchableOpacity activeOpacity={0.8}>
-          <Text>Cart</Text>
-        </TouchableOpacity>
+        <Cart />
       </HeroContainer>
     </Wrapper>
   );
