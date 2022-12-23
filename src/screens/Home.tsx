@@ -1,21 +1,24 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { useContext } from 'react';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from '@emotion/native';
 
 import { ThemeContext } from '~src/context/Theme';
+import { Text, TouchableOpacity } from 'react-native';
+import { Toggler } from '~src/components/Toggler/Toggler';
 
 export const Home = () => {
-  const { theme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const { top } = useSafeAreaInsets();
 
   return (
     <Wrapper theme={theme} topSpacing={top}>
       <HeroContainer theme={theme}>
-        <HeroTitle theme={theme} style={{ fontFamily: 'Legothick' }}>
-          LEGO Store
-        </HeroTitle>
+        <Toggler />
+        <LegoLogo source={require('~src/assets/images/lego.png')} />
+        <TouchableOpacity activeOpacity={0.8}>
+          <Text>Cart</Text>
+        </TouchableOpacity>
       </HeroContainer>
     </Wrapper>
   );
@@ -38,16 +41,16 @@ const HeroContainer = styled.View`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.card};
   border-radius: 25px 0 25px 0;
-  border: ${({ theme }) => `3px solid ${theme.colors.notification}`};
+  border: ${({ theme }) => `3px solid ${theme.colors.border}`};
   display: flex;
   flex-direction: row;
-  height: 80px;
-  justify-content: space-evenly;
+  height: 75px;
+  justify-content: space-between;
+  padding: 0 20px;
   width: 100%;
 `;
 
-const HeroTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.text};
-  font-size: 15px;
-  text-shadow: ${({ theme }) => `-1px 0.2px 0.3px ${theme.colors.border}`};
+const LegoLogo = styled.Image`
+  height: 50px;
+  width: 100px;
 `;
