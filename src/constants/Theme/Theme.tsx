@@ -7,10 +7,10 @@ export const darkTheme: ThemeState = {
   colors: {
     background: '#550e05',
     border: '#9b9b11',
-    card: '',
+    card: '#9b9695',
     notification: '',
-    primary: '',
-    text: '',
+    primary: '#787878',
+    text: '#FFF',
   },
 };
 export const lightTheme: ThemeState = {
@@ -19,10 +19,10 @@ export const lightTheme: ThemeState = {
   dividerColor: '',
   colors: {
     background: '#c61e08',
-    border: '#ffff3d',
-    card: '',
-    notification: '',
-    primary: '',
-    text: '',
+    border: '#000000',
+    card: '#ffffff6f',
+    notification: '#F6ec36',
+    primary: '#FFFF',
+    text: '#ffffff',
   },
 };
