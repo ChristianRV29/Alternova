@@ -8,8 +8,8 @@ export const darkTheme: ThemeState = {
     background: '#7f131b',
     border: '#ffffff',
     card: '#1E5AA8',
-    notification: '#F6ec36',
-    primary: '#FFFF',
+    notification: '#aeb441',
+    primary: '#628026',
     text: '#ffffff',
   },
 };
@@ -21,8 +21,8 @@ export const lightTheme: ThemeState = {
     background: '#c61e08',
     border: '#F6ec36',
     card: '#9dc3f7',
-    notification: '#000000',
-    primary: '#000000',
+    notification: '#ecf473',
+    primary: '#9aca3a',
     text: '#000000',
   },
 };
