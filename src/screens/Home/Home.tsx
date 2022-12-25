@@ -4,8 +4,8 @@ import { FlatList, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ThemeContext } from '~src/context/Theme';
-import { Cart, Toggler, ProductCard } from '~src/components';
-import { data } from '~src/data';
+import { CartIcon, Toggler, ProductCard } from '~src/components';
+import { ProductsContext } from '~src/context/Products';
 import {
   HeaderListContainer,
   HeaderListText,
@@ -14,6 +14,10 @@ import {
   ProductsContainer,
   Wrapper,
 } from './styles';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '~src/@types';
+
+type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'HomeScreen'>;
 
 const HeaderList = () => {
   return (
@@ -22,21 +26,24 @@ const HeaderList = () => {
     </HeaderListContainer>
   );
 };
-
-export const Home = () => {
+export const Home = ({ navigation }: HomeScreenProps) => {
   const { theme } = useContext(ThemeContext);
   const { top } = useSafeAreaInsets();
+  const { products, productsCart } = useContext(ProductsContext);
 
   return (
     <Wrapper theme={theme} topSpacing={top}>
       <HeroContainer theme={theme}>
         <Toggler />
         <LegoLogo source={require('~src/assets/images/lego.png')} />
-        <Cart quantity={5} />
+        <CartIcon
+          quantity={productsCart.length}
+          onPress={() => navigation.navigate('CartScreen')}
+        />
       </HeroContainer>
       <ProductsContainer os={Platform.OS}>
         <FlatList
-          data={data.products}
+          data={products}
           keyExtractor={item => item.name}
           ListHeaderComponent={() => <HeaderList />}
           numColumns={2}

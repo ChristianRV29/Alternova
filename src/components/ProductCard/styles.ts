@@ -7,7 +7,7 @@ export const Wrapper = styled.View`
   border: ${({ theme }) => `2px solid ${theme.colors.border}`};
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: 220px;
   margin: 10px 10px 25px 10px;
   width: 45%;
 `;
@@ -39,10 +39,24 @@ export const DescriptionContainer = styled.View`
   width: 100%;
 `;
 
-export const PriceText = styled.Text`
-  align-self: flex-end;
+export const DetailsContainer = styled.View`
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+`;
+
+export const ProductTitle = styled.Text`
   color: white;
-  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+`;
+
+export const DetailText = styled.Text`
+  color: white;
+  font-size: 15px;
+  margin: 0 5px;
 `;
 
 export const AddToCartButton = styled.TouchableOpacity`

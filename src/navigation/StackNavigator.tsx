@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { RootStackParamList } from '~src/@types/types';
-import { Details, Home } from '~src/screens';
+import { Details, Home, Cart } from '~src/screens';
 import { ThemeContext } from '~src/context/Theme';
 
 const { Navigator, Screen } = createNativeStackNavigator<RootStackParamList>();
@@ -19,6 +19,7 @@ export const StackNavigator = () => {
         }}>
         <Screen name="HomeScreen" component={Home} />
         <Screen name="DetailsScreen" component={Details} />
+        <Screen name="CartScreen" component={Cart} />
       </Navigator>
     </NavigationContainer>
   );

@@ -7,19 +7,20 @@ import { Quantity, QuantityContainer, Wrapper } from './styles';
 
 interface Props {
   quantity: number;
+  onPress: () => void;
 }
 
-export const Cart: React.FC<Props> = ({ quantity }) => {
+export const CartIcon: React.FC<Props> = ({ quantity, onPress }) => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <Wrapper
-      activeOpacity={0.8}
-      onPress={() => console.log('Go cart shopping')}>
+    <Wrapper activeOpacity={0.8} onPress={onPress}>
       <Icon name="cart-outline" size={30} color={theme.colors.text} />
-      <QuantityContainer theme={theme}>
-        <Quantity>{quantity}</Quantity>
-      </QuantityContainer>
+      {quantity > 0 && (
+        <QuantityContainer theme={theme}>
+          <Quantity>{quantity}</Quantity>
+        </QuantityContainer>
+      )}
     </Wrapper>
   );
 };
