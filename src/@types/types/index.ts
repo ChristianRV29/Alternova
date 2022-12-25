@@ -14,6 +14,7 @@ export type ProductContextProps = {
 };
 
 export type RootStackParamList = {
+  LoginScreen: undefined;
   HomeScreen: undefined;
   DetailsScreen: {
     product: Product;
