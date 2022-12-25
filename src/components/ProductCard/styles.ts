@@ -39,10 +39,17 @@ export const DescriptionContainer = styled.View`
   width: 100%;
 `;
 
-export const PriceText = styled.Text`
-  align-self: flex-end;
+export const DetailsContainer = styled.View`
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+`;
+
+export const DetailText = styled.Text`
   color: white;
-  font-size: 18px;
+  font-size: 15px;
+  margin: 0 5px;
 `;
 
 export const AddToCartButton = styled.TouchableOpacity`

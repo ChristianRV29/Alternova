@@ -7,12 +7,14 @@ import {
   AddToCartButton,
   AddToCartText,
   DescriptionContainer,
+  DetailsContainer,
+  DetailText,
   ImageContainer,
-  PriceText,
   ProductImage,
   Wrapper,
 } from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { ProductsContext } from '~src/context/Products';
 
 interface Props {
   product: Product;
@@ -20,8 +22,15 @@ interface Props {
 
 export const ProductCard: React.FC<Props> = ({ product }) => {
   const { theme } = useContext(ThemeContext);
+  const { addProductCart } = useContext(ProductsContext);
 
   const [quantity, setQuantity] = useState<number>(0);
+
+  const addProduct = () => {
+    setQuantity(0);
+    addProductCart(product, quantity);
+  };
+
   return (
     <Wrapper theme={theme}>
       <ImageContainer theme={theme}>
@@ -32,7 +41,10 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
         />
       </ImageContainer>
       <DescriptionContainer>
-        <PriceText>{`$${product.unit_price}`}</PriceText>
+        <DetailsContainer>
+          <DetailText>{`Disponibles: ${product.stock}`}</DetailText>
+          <DetailText>{`$${product.unit_price}`}</DetailText>
+        </DetailsContainer>
         <QuantitySelector
           max={product.stock}
           min={0}
@@ -40,7 +52,10 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
           value={quantity}
         />
         {quantity > 0 && (
-          <AddToCartButton activeOpacity={0.8} theme={theme}>
+          <AddToCartButton
+            activeOpacity={0.8}
+            theme={theme}
+            onPress={() => addProduct()}>
             <AddToCartText theme={theme}>Añadir</AddToCartText>
             <Icon name="cart-outline" size={20} color={theme.colors.text} />
           </AddToCartButton>
