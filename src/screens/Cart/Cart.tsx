@@ -3,23 +3,25 @@ import React, { useContext } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { RootStackParamList } from '~src/@types';
 
+import { RootStackParamList } from '~src/@types';
 import { Toggler, CartCard } from '~src/components';
+import { ProductsContext, ThemeContext } from '~src/context';
+import { HeroContainer, LegoLogo } from './../Home/styles';
 import {
+  Wrapper,
   EmptyCartContainer,
   EmptyCartText,
   NavigationButton,
-} from '~src/components/Cart/CartCard/style';
-
-import { ProductsContext, ThemeContext } from '~src/context';
-import { HeroContainer, LegoLogo } from './../Home/styles';
-import { Wrapper } from './styles';
+  BuyButton,
+  BuyText,
+  ProductsContainer,
+} from './styles';
 
 type CartScreenProps = NativeStackScreenProps<RootStackParamList, 'CartScreen'>;
 
 export const Cart = ({ navigation }: CartScreenProps) => {
-  const { productsCart } = useContext(ProductsContext);
+  const { productsCart, buyProducts } = useContext(ProductsContext);
   const { theme } = useContext(ThemeContext);
   const { top } = useSafeAreaInsets();
 
@@ -33,12 +35,18 @@ export const Cart = ({ navigation }: CartScreenProps) => {
         </TouchableOpacity>
       </HeroContainer>
       {productsCart.length > 0 ? (
-        <FlatList
-          data={productsCart}
-          keyExtractor={it => it.name}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => <CartCard product={item} />}
-        />
+        <ProductsContainer>
+          <FlatList
+            data={productsCart}
+            keyExtractor={it => it.name}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => <CartCard product={item} />}
+          />
+          <BuyButton theme={theme} onPress={() => buyProducts()}>
+            <BuyText theme={theme}>Comprar</BuyText>
+            <Icon name="card-outline" size={20} color={theme.colors.text} />
+          </BuyButton>
+        </ProductsContainer>
       ) : (
         <EmptyCartContainer>
           <EmptyCartText>

@@ -7,7 +7,7 @@ export const Wrapper = styled.View`
   border: ${({ theme }) => `2px solid ${theme.colors.border}`};
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: 220px;
   margin: 10px 10px 25px 10px;
   width: 45%;
 `;
@@ -44,6 +44,13 @@ export const DetailsContainer = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+`;
+
+export const ProductTitle = styled.Text`
+  color: white;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
 `;
 
 export const DetailText = styled.Text`

@@ -71,12 +71,15 @@ export const ProductsProvider = ({ children }: any) => {
     }
   };
 
+  const buyProducts = () => setProductsCart([]);
+
   return (
     <ProductsContext.Provider
       value={{
+        addProductCart,
+        buyProducts,
         products,
         productsCart,
-        addProductCart,
         removeProductCart,
       }}>
       {children}

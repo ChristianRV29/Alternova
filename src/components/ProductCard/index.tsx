@@ -11,6 +11,7 @@ import {
   DetailText,
   ImageContainer,
   ProductImage,
+  ProductTitle,
   Wrapper,
 } from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -41,6 +42,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
         />
       </ImageContainer>
       <DescriptionContainer>
+        <ProductTitle>{product.name}</ProductTitle>
         <DetailsContainer>
           <DetailText>{`Disponibles: ${product.stock}`}</DetailText>
           <DetailText>{`$${product.unit_price}`}</DetailText>

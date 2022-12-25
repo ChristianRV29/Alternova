@@ -10,6 +10,7 @@ export type ProductContextProps = {
   productsCart: Array<ProductCart>;
   addProductCart: (product: Product, quantity: number) => void;
   removeProductCart: (id: number) => void;
+  buyProducts: () => void;
 };
 
 export type RootStackParamList = {
