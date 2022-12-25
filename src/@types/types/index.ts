@@ -1,8 +1,15 @@
-import { Product, ThemeState } from './../interfaces';
+import { Product, ProductCart, ThemeState } from './../interfaces';
 
 export type ThemeContextProps = {
   theme: ThemeState;
   toggleTheme: () => void;
+};
+
+export type ProductContextProps = {
+  products: Array<Product>;
+  productsCart: Array<ProductCart>;
+  addProductCart: (product: Product, quantity: number) => void;
+  removeProductCart: (id: number) => void;
 };
 
 export type RootStackParamList = {
@@ -10,6 +17,7 @@ export type RootStackParamList = {
   DetailsScreen: {
     product: Product;
   };
+  CartScreen: undefined;
 };
 
 export type ThemeAction = { type: 'setDarkTheme' } | { type: 'setLightTheme' };
