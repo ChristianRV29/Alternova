@@ -1,5 +1,11 @@
 import styled from '@emotion/native';
 
+export const TouchableStyled = styled.TouchableOpacity`
+  height: 250px;
+  width: 45%;
+  margin: 10px 10px 25px 10px;
+`;
+
 export const Wrapper = styled.View`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.primary};
@@ -7,9 +13,6 @@ export const Wrapper = styled.View`
   border: ${({ theme }) => `2px solid ${theme.colors.border}`};
   display: flex;
   flex-direction: column;
-  height: 220px;
-  margin: 10px 10px 25px 10px;
-  width: 45%;
 `;
 
 export const ImageContainer = styled.View`
@@ -33,7 +36,7 @@ export const DescriptionContainer = styled.View`
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 120px;
+  height: 150px;
   margin-top: 25px;
   padding: 5px;
   width: 100%;
