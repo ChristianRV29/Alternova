@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>517022049155-0fn06eo1srislkbdvlcrtc2d5goevh2p.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.517022049155-0fn06eo1srislkbdvlcrtc2d5goevh2p</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDefYFiFzvAS3RC8J46WiOJHP_h9j7orDI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>517022049155</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.AlternovaApp</string>
+	<key>PROJECT_ID</key>
+	<string>alternova-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>alternova-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:517022049155:ios:c8bc3b7195bcdb1ada4cb6</string>
+</dict>
+</plist>
