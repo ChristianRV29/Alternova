@@ -1,10 +1,11 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useEffect, useReducer } from 'react';
 
 import auth from '@react-native-firebase/auth';
 
 import { AuthContextProps, AuthState } from '~src/@types';
 import { AuthReducer } from '~src/hooks';
 import { UserData } from '~src/@types/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AuthContext = createContext({} as AuthContextProps);
 
@@ -17,10 +18,37 @@ const authInitialState: AuthState = {
 export const AuthProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(AuthReducer, authInitialState);
 
+  useEffect(() => {
+    checkUserId();
+  }, []);
+
+  const checkUserId = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('@user_id');
+
+      if (userId) {
+        dispatch({
+          type: 'SignUp',
+          payload: {
+            user: {
+              isAnonymous: true,
+              email: null,
+              uid: userId,
+            },
+          },
+        });
+      } else {
+        dispatch({ type: 'Logout' });
+      }
+    } catch (err) {
+      dispatch({ type: 'Logout' });
+    }
+  };
+
   const signUp = ({ email, password }: UserData) => {
     auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(data => {
+      .then(async data => {
         const { user } = data;
         dispatch({
           type: 'SignUp',
@@ -28,6 +56,8 @@ export const AuthProvider = ({ children }: any) => {
             user,
           },
         });
+
+        await AsyncStorage.setItem('@user_id', user.uid);
       })
       .catch(err => {
         if (err.code === 'auth/email-already-in-use') {
@@ -52,13 +82,15 @@ export const AuthProvider = ({ children }: any) => {
   const signIn = ({ email, password }: UserData) => {
     auth()
       .signInWithEmailAndPassword(email, password)
-      .then(data => {
+      .then(async data => {
+        const { user } = data;
         dispatch({
           type: 'SignUp',
           payload: {
-            user: data.user,
+            user: user,
           },
         });
+        await AsyncStorage.setItem('@user_id', user.uid);
       })
       .catch(() =>
         dispatch({
@@ -72,7 +104,10 @@ export const AuthProvider = ({ children }: any) => {
 
   const removeError = () => dispatch({ type: 'RemoveError' });
 
-  const logOut = () => dispatch({ type: 'Logout' });
+  const logOut = async () => {
+    dispatch({ type: 'Logout' });
+    await AsyncStorage.removeItem('@user_id');
+  };
 
   return (
     <AuthContext.Provider
