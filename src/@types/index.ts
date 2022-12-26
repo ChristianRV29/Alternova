@@ -10,6 +10,9 @@ export type {
   ThemeAction,
   ProductContextProps,
   RootStackParamList,
+  AuthContextProps,
+  AuthState,
+  AuthAction,
 } from './types';
 
 export { Theme } from './enums';
