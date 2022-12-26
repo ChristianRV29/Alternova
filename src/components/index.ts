@@ -5,3 +5,4 @@ export { ProductCard } from './ProductCard';
 export { QuantitySelector } from './QuantitySelector';
 export { BackgroundShape } from './BackgroundShape/';
 export { AlternovaLogo } from './AlternovaLogo';
+export { HeroIcon } from './HeroIcon';
