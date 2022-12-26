@@ -22,3 +22,9 @@ export interface QuantitySelectorProps {
   value: number;
   onChange: (value: number) => void;
 }
+
+export interface SignUpResponse {
+  email: string;
+  emailVerified: boolean;
+  uid: string;
+}
