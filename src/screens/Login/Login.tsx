@@ -1,5 +1,6 @@
-import React, { FC, Fragment } from 'react';
-import { Keyboard, Platform } from 'react-native';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { FC, Fragment, useContext, useEffect } from 'react';
+import { Alert, Keyboard, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -22,22 +23,36 @@ import {
 } from './styles';
 import { RootStackParamList } from '~src/@types';
 import { AlternovaLogo } from '~src/components';
+import { AuthContext } from '~src/context';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
 export const Login: FC<Props> = ({ navigation }) => {
   const { top } = useSafeAreaInsets();
 
+  const { signIn, errorMessage, removeError } = useContext(AuthContext);
+
   const { email, password, onChange } = useForm({
     email: undefined,
     password: undefined,
   });
 
+  useEffect(() => {
+    if (errorMessage) {
+      Alert.alert('Wrong login', errorMessage, [
+        {
+          text: 'Ok',
+          onPress: removeError,
+        },
+      ]);
+    }
+  }, [errorMessage]);
+
   const onLogin = () => {
     Keyboard.dismiss();
 
     if (email && password) {
-      navigation.navigate('HomeScreen');
+      signIn({ email, password });
     }
   };
 
@@ -81,9 +96,10 @@ export const Login: FC<Props> = ({ navigation }) => {
               value={password}
             />
             <ActionButtonsContainer>
-              {/* <ActionButton onPress={() => console.log('Navigating')}>
+              <ActionButton
+                onPress={() => navigation.navigate('RegisterScreen')}>
                 <ActionButtonText>Register</ActionButtonText>
-              </ActionButton> */}
+              </ActionButton>
               <ActionButton onPress={onLogin}>
                 <ActionButtonText>Login</ActionButtonText>
               </ActionButton>
