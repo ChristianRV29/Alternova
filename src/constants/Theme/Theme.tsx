@@ -21,7 +21,7 @@ export const lightTheme: ThemeState = {
     background: '#c61e08',
     border: '#F6ec36',
     card: '#9dc3f7',
-    notification: '#ecf473',
+    notification: '#73f491',
     primary: '#9aca3a',
     text: '#122d19',
   },

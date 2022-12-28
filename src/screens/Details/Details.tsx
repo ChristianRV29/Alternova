@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -19,9 +19,11 @@ import {
   ProductImage,
   ProductPrice,
   ProductStock,
+  ProductDescription,
   ProductTitle,
   Wrapper,
 } from './styles';
+import { useProductsDetails } from '~src/hooks/useProductDetails';
 
 type DetailsScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -29,7 +31,9 @@ type DetailsScreenProps = NativeStackScreenProps<
 >;
 
 export const Details = ({ navigation, route }: DetailsScreenProps) => {
-  const { product } = route.params;
+  const { product: productRoute } = route.params;
+
+  const { product, isFetching } = useProductsDetails(productRoute.id);
 
   const { top } = useSafeAreaInsets();
   const { theme } = useContext(ThemeContext);
@@ -38,7 +42,7 @@ export const Details = ({ navigation, route }: DetailsScreenProps) => {
   const [quantity, setQuantity] = useState<number>(1);
 
   const addProduct = () => {
-    addProductCart(product, quantity);
+    addProductCart(productRoute, quantity);
     navigation.navigate('CartScreen');
   };
 
@@ -55,37 +59,51 @@ export const Details = ({ navigation, route }: DetailsScreenProps) => {
           onPress={() => navigation.navigate('CartScreen')}
         />
       </HeroContainer>
-      <ProductContainer>
-        <ImageContainer>
-          <ProductImage source={{ uri: product.image }} resizeMode="contain" />
-        </ImageContainer>
-        <DetailsContainer theme={theme}>
-          <ProductTitle theme={theme}>{product.name}</ProductTitle>
-          <ProductStock
-            theme={theme}>{`Existencias: ${product.stock}`}</ProductStock>
-          <ProductPrice theme={theme}>
-            {`TOTAL: ${product.unit_price * quantity}`}
-          </ProductPrice>
-          <QuantitySelector
-            max={product.stock}
-            value={quantity}
-            onChange={it => setQuantity(it)}
-          />
-          {quantity > 0 && (
-            <AddToCartButton
-              activeOpacity={0.8}
-              theme={theme}
-              onPress={() => addProduct()}>
-              <AddToCartText theme={theme}>Añadir</AddToCartText>
-              <Icon
-                name="cart-outline"
-                size={20}
-                color={theme.colors.primary}
-              />
-            </AddToCartButton>
-          )}
-        </DetailsContainer>
-      </ProductContainer>
+      {isFetching ? (
+        <ProductContainer>
+          <ActivityIndicator size={50} color={theme.colors.text} />
+        </ProductContainer>
+      ) : (
+        <ProductContainer>
+          <ImageContainer>
+            <ProductImage
+              source={{ uri: product.image }}
+              resizeMode="contain"
+            />
+          </ImageContainer>
+          <DetailsContainer theme={theme}>
+            <ProductTitle theme={theme}>{product.name}</ProductTitle>
+            <ProductDescription theme={theme}>
+              {product.description}
+            </ProductDescription>
+            <ProductStock
+              theme={
+                theme
+              }>{`Existencias: ${productRoute.stock}`}</ProductStock>
+            <ProductPrice theme={theme}>
+              {`TOTAL: ${product.unit_price * quantity}`}
+            </ProductPrice>
+            <QuantitySelector
+              max={product.stock}
+              value={quantity}
+              onChange={it => setQuantity(it)}
+            />
+            {quantity > 0 && (
+              <AddToCartButton
+                activeOpacity={0.8}
+                theme={theme}
+                onPress={() => addProduct()}>
+                <AddToCartText theme={theme}>Añadir</AddToCartText>
+                <Icon
+                  name="cart-outline"
+                  size={20}
+                  color={theme.colors.primary}
+                />
+              </AddToCartButton>
+            )}
+          </DetailsContainer>
+        </ProductContainer>
+      )}
     </Wrapper>
   );
 };

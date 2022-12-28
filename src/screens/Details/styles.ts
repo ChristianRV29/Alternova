@@ -72,6 +72,12 @@ export const ProductImage = styled.Image`
   width: 100px;
 `;
 
+export const ProductDescription = styled.Text`
+  font-size: 15px;
+  color: ${({ theme }) => theme.colors.text};
+  text-align: justify;
+`;
+
 export const ProductStock = styled.Text`
   color: ${({ theme }) => theme.colors.card};
   font-size: 18px;

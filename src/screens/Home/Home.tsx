@@ -1,16 +1,17 @@
 import React, { useContext } from 'react';
-import { FlatList, Platform } from 'react-native';
+import { ActivityIndicator, FlatList, Platform } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ThemeContext } from '~src/context/Theme';
-import { CartIcon, ProductCard, LogoutIcon, HeroIcon } from '~src/components';
+import { CartIcon, ProductCard, HeroIcon } from '~src/components';
 import { ProductsContext } from '~src/context/Products';
 import {
   HeaderListContainer,
   HeaderListText,
   HeroContainer,
   LegoLogo,
+  LoadingContainer,
   ProductsContainer,
   Wrapper,
 } from './styles';
@@ -30,7 +31,7 @@ const HeaderList = () => {
 export const Home = ({ navigation }: HomeScreenProps) => {
   const { theme } = useContext(ThemeContext);
   const { top } = useSafeAreaInsets();
-  const { products, productsCart } = useContext(ProductsContext);
+  const { products, productsCart, isFetching } = useContext(ProductsContext);
   const { logOut } = useContext(AuthContext);
 
   return (
@@ -43,16 +44,22 @@ export const Home = ({ navigation }: HomeScreenProps) => {
           onPress={() => navigation.navigate('CartScreen')}
         />
       </HeroContainer>
-      <ProductsContainer os={Platform.OS}>
-        <FlatList
-          data={products}
-          keyExtractor={item => item.name}
-          ListHeaderComponent={() => <HeaderList />}
-          numColumns={2}
-          renderItem={({ item }) => <ProductCard product={item} />}
-          showsVerticalScrollIndicator={false}
-        />
-      </ProductsContainer>
+      {isFetching ? (
+        <LoadingContainer>
+          <ActivityIndicator size={50} color={theme.colors.text} />
+        </LoadingContainer>
+      ) : (
+        <ProductsContainer os={Platform.OS}>
+          <FlatList
+            data={products}
+            keyExtractor={item => item.name}
+            ListHeaderComponent={() => <HeaderList />}
+            numColumns={2}
+            renderItem={({ item }) => <ProductCard product={item} />}
+            showsVerticalScrollIndicator={false}
+          />
+        </ProductsContainer>
+      )}
     </Wrapper>
   );
 };
