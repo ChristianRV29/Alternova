@@ -1,23 +1,34 @@
+/* eslint-disable curly */
 import React, { createContext, useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import { Product, ProductCart, ProductContextProps } from '~src/@types';
-import { data } from '~src/data';
+import { fetchProducts } from '~src/utils';
 
 export const ProductsContext = createContext({} as ProductContextProps);
 
 export const ProductsProvider = ({ children }: any) => {
-  const [products, setProducts] = useState<Array<Product>>([]);
+  const [isFetching, setIsFetching] = useState<boolean>(true);
+  const [productsApp, setProductsApp] = useState<Array<Product>>([]);
   const [productsCart, setProductsCart] = useState<Array<ProductCart>>([]);
 
   useEffect(() => {
-    const availableProducts = data.products.filter(it => it.stock > 0);
-    if (availableProducts.length > 0) {
-      setProducts(availableProducts);
-    }
+    getProductsData();
   }, []);
 
-  const addProductCart = (newProduct: Product, quantity: number) => {
-    const product = products.filter(it => it.id === newProduct.id)[0];
+  const getProductsData = () => {
+    fetchProducts()
+      .then(resp => {
+        const { data } = resp;
+        if (data && data.length > 0) {
+          const availableProducts = data.filter(it => it.stock > 0);
+          setProductsApp(availableProducts);
+        }
+      })
+      .finally(() => setIsFetching(false));
+  };
 
+  const addProductCart = (newProduct: Product, quantity: number) => {
+    const product = productsApp.filter(it => it.id === newProduct.id)[0];
     if (product && quantity <= product.stock) {
       const exists = productsCart.some(it => it.id === newProduct.id);
       if (exists) {
@@ -33,11 +44,12 @@ export const ProductsProvider = ({ children }: any) => {
       } else {
         setProductsCart([...productsCart, { ...newProduct, quantity }]);
       }
-
       if (quantity === product.stock) {
-        setProducts(current => current.filter(it => it.id !== newProduct.id));
+        setProductsApp(current =>
+          current.filter(it => it.id !== newProduct.id),
+        );
       } else {
-        setProducts(current =>
+        setProductsApp(current =>
           current.map(it => {
             if (it.id === newProduct.id) {
               return { ...it, stock: product.stock - quantity };
@@ -54,11 +66,10 @@ export const ProductsProvider = ({ children }: any) => {
     const product = productsCart.filter(it => it.id === id)[0];
     if (product) {
       setProductsCart(current => current.filter(it => it.id !== id));
-
       if (product.stock === product.quantity) {
-        setProducts([...products, product]);
+        setProductsApp([...productsApp, product]);
       } else {
-        setProducts(current =>
+        setProductsApp(current =>
           current.map(it => {
             if (it.id === id) {
               return { ...it, stock: it.stock + product.quantity };
@@ -71,16 +82,25 @@ export const ProductsProvider = ({ children }: any) => {
     }
   };
 
-  const buyProducts = () => setProductsCart([]);
+  const buyProducts = () => {
+    setProductsCart([]);
+    Alert.alert('Gracias por comprar!', 'Los productos se enviarán pronto :)', [
+      {
+        text: 'Cerrar',
+        style: 'cancel',
+      },
+    ]);
+  };
 
   return (
     <ProductsContext.Provider
       value={{
         addProductCart,
         buyProducts,
-        products,
+        products: productsApp,
         productsCart,
         removeProductCart,
+        isFetching,
       }}>
       {children}
     </ProductsContext.Provider>
