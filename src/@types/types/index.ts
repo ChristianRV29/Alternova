@@ -11,6 +11,7 @@ export type ProductContextProps = {
   addProductCart: (product: Product, quantity: number) => void;
   removeProductCart: (id: number) => void;
   buyProducts: () => void;
+  isFetching: boolean;
 };
 
 export type Status = 'checking' | 'authenticated' | 'not-authenticated';

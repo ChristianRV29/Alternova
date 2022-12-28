@@ -3,6 +3,7 @@ export type {
   ThemeState,
   QuantitySelectorProps,
   ProductCart,
+  ProductsResponse,
 } from './interfaces';
 
 export type {
