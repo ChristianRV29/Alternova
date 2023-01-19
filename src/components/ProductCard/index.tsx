@@ -22,6 +22,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductsContext } from '~src/context/Products';
 
 import { RootStackParamList } from '~src/@types';
+import { StyleSheet } from 'react-native';
 
 interface Props {
   product: Product;

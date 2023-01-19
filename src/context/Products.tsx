@@ -1,8 +1,10 @@
 /* eslint-disable curly */
 import React, { createContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
+
 import { Product, ProductCart, ProductContextProps } from '~src/@types';
 import { fetchProducts } from '~src/utils';
+import burnedData from '~src/data/data.json';
 
 export const ProductsContext = createContext({} as ProductContextProps);
 
@@ -23,6 +25,12 @@ export const ProductsProvider = ({ children }: any) => {
           const availableProducts = data.filter(it => it.stock > 0);
           setProductsApp(availableProducts);
         }
+      })
+      .catch(() => {
+        const availableProducts = burnedData.products.filter(
+          it => it.stock > 0,
+        );
+        setProductsApp(availableProducts);
       })
       .finally(() => setIsFetching(false));
   };
